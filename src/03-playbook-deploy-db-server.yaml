@@ -34,7 +34,9 @@ tasks:
       zone: public
 
   - name: reload firewalld service
+    # exec: sudo firewall-cmd --list-all
     # exec: sudo firewall-cmd --reload
+    # exec: sudo firewall-cmd --list-all
     service:
       name: firewalld
       state: restarted
