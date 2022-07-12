@@ -1,0 +1,48 @@
+---
+name: Configure Database
+hosts: target1
+tasks: 
+  - name: Create a new database with name 'ecomdb'
+    # MariaDB > CREATE DATABASE ecomdb;
+    community.mysql.mysql_db:
+      name: ecomdb
+      state: present 
+
+  - name: Create database user with name 'ecomuser' and password 'ecompassword' with all database privileges
+    # MariaDB > CREATE USER 'ecomuser'@'localhost' IDENTIFIED BY 'ecompassword';
+    # MariaDB > GRANT ALL PRIVILEGES ON *.* TO 'ecomuser'@'localhost';
+    # MariaDB > FLUSH PRIVILEGES;
+    community.mysql.mysql_user:
+      name: ecomuser
+      password: ecompassword
+      priv: '*.*:ALL'
+      state: present
+
+  - name: Remove all anonymous user accounts on all hosts
+    community.mysql.mysql_user:
+      name: ''
+      host_all: yes
+      state: absent
+
+  - name: restart mariadb service to reload privileges
+    # sudo service mariadb restart
+    become: true
+    service:
+      namee: mariadb
+      state: restarted
+
+  - name: copy db dump to remote server
+    # Copy database dump file to remote host
+    copy:
+      src: ./assets/db-load-script.sql
+      dest: /tmp
+
+  - name: Restore database
+    # mysql < db-load-script.sql
+    community.mysql.mysql_db:
+      name: ecomdb
+      login_user: 'ecomuser'
+      login_password: 'ecompassword'
+      state: import
+      target: /tmp/db-load-script.sql
+
