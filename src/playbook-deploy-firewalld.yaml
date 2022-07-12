@@ -1,0 +1,21 @@
+---
+- name: deploy FirewallD
+  hosts: target1
+  tasks:
+  - name: intall firewall service on target server
+    # exec: sudo yum install -y firewalld
+    become: true
+    yum:
+      name: firewalld
+      state: latest
+  - name: start firewall service  
+    # exec: sudo service firewalld start
+    # exec: sudo systemctl enable firewalld
+    become: true
+    service:
+      name: firewalld
+      state: started  # start service
+      enabled: yes    # enable service after reboot
+  - name: populate firewalld service facts
+    # exec: service firewalld status
+    ansible.builtin.service_facts:
