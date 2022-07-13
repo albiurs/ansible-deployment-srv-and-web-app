@@ -28,13 +28,13 @@
     - name: restart mariadb service to reload privileges
       # sudo service mariadb restart
       become: true
-      service:
+      ansible.builtin.service:
         namee: mariadb
         state: restarted
 
     - name: copy db dump to remote server
       # Copy database dump file to remote host
-      copy:
+      ansible.builtin.copy:
         src: ./assets/db-load-script.sql
         dest: /tmp
 

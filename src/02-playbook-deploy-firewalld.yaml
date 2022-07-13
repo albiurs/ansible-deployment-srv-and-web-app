@@ -6,7 +6,7 @@
   - name: intall firewall service on target server
     # exec: sudo yum install -y firewalld
     become: true
-    yum:
+    ansible.builtin.yum:
       name: firewalld
       state: latest
 
@@ -14,7 +14,7 @@
     # exec: sudo service firewalld start
     # exec: sudo systemctl enable firewalld
     become: true
-    service:
+    ansible.builtin.service:
       name: firewalld
       state: started  # start service
       enabled: yes    # enable service after reboot
@@ -29,8 +29,7 @@
   tasks:
   - name: configure firewall rules for database
     # sudo firewall-cmd --permanent --zone=public --add-port=3306/tcp
-    firewalld:
-      service: 
+    ansible.posix.firewalld:
       port: 3306/tcp
       permanent: yes
       zone: public
@@ -40,7 +39,7 @@
     # sudo firewall-cmd --list-all
     # sudo firewall-cmd --reload
     # sudo firewall-cmd --list-all
-    service:
+    ansible.builtin.service:
       name: firewalld
       state: restarted
 
@@ -56,8 +55,7 @@
     # sudo firewall-cmd --list-all
     # sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
     become: true
-    firewalld:
-      service: 
+    ansible.posix.firewalld:
       port: 80/tcp
       permanent: yes
       zone: public
@@ -67,7 +65,7 @@
     # sudo firewall-cmd --list-all
     # sudo firewall-cmd --reload
     # sudo firewall-cmd --list-all
-    service:
+    ansible.builtin.service:
       name: firewalld
       state: restarted
 

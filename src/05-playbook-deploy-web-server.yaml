@@ -16,7 +16,7 @@
     - name: install web server packages
       # sudo yum install -y httpd php php-mysql
       become: true
-      yum:
+      ansible.builtin.yum:
         name: "{{ item.name }}"
         state: latest
       when: item.required == true
@@ -26,7 +26,7 @@
       # sudo service httpd start
       # sudo systemctl enable httpd
       become: true
-      service:
+      ansible.builtin.service:
         #name: '{{ packages[0] }}'
         name: httpd
         state: started
@@ -44,7 +44,7 @@
     - name: restart service httpd
       # sudo service httpd restart
       become: true
-      service:
+      ansible.builtin.service:
         name: httpd
         state: restarted
 
@@ -57,7 +57,7 @@
 
     - name: Update index.php file to connect to the right database server
       become: true
-      replace:
+      ansible.builtin.replace:
         path: /var/www/html/index.php
         regexp: '172.20.1.101'
         replace: 'localhost'
