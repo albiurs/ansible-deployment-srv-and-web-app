@@ -1,0 +1,13 @@
+{
+    "ansible.ansibleLint.path": "/home/alu/.local/bin/ansible-lint",
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible.json#/$defs/playbook": [
+            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/test.yaml",
+            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/04-playbook-configure-db.yaml",
+            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/03-playbook-deploy-db-server.yaml",
+            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/02-playbook-deploy-firewalld.yaml",
+            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/ansible_demo_playbook.yaml",
+            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/05-playbook-deploy-web-server.yaml"
+        ]
+    }
+}

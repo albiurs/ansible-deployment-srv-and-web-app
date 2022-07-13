@@ -1,6 +1,7 @@
 ---
 - name: deploy FirewallD
   hosts: target1
+
   tasks:
   - name: intall firewall service on target server
     # exec: sudo yum install -y firewalld
@@ -8,6 +9,7 @@
     yum:
       name: firewalld
       state: latest
+
   - name: start firewall service  
     # exec: sudo service firewalld start
     # exec: sudo systemctl enable firewalld
@@ -16,6 +18,59 @@
       name: firewalld
       state: started  # start service
       enabled: yes    # enable service after reboot
+
+  - name: populate firewalld service facts
+    # exec: service firewalld status
+    ansible.builtin.service_facts:
+
+- name: configure FirewallD rules for database
+  hosts: target1
+
+  tasks:
+  - name: configure firewall rules for database
+    # sudo firewall-cmd --permanent --zone=public --add-port=3306/tcp
+    firewalld:
+      service: 
+      port: 3306/tcp
+      permanent: yes
+      zone: public
+      state: enable
+
+  - name: reload firewalld service
+    # sudo firewall-cmd --list-all
+    # sudo firewall-cmd --reload
+    # sudo firewall-cmd --list-all
+    service:
+      name: firewalld
+      state: restarted
+
+  - name: populate firewalld service facts
+    # exec: service firewalld status
+    ansible.builtin.service_facts:
+
+- name: configure FirewallD rules for web server
+  hosts: target1
+
+  tasks:
+  - name: configure firewall rules for web server
+    # sudo firewall-cmd --list-all
+    # sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
+    become: true
+    firewalld:
+      service: 
+      port: 80/tcp
+      permanent: yes
+      zone: public
+      state: enable
+        
+  - name: reload firewalld service
+    # sudo firewall-cmd --list-all
+    # sudo firewall-cmd --reload
+    # sudo firewall-cmd --list-all
+    service:
+      name: firewalld
+      state: restarted
+
   - name: populate firewalld service facts
     # exec: service firewalld status
     ansible.builtin.service_facts:
