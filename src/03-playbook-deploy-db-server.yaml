@@ -1,43 +1,27 @@
 ---
-name: deploy database server
-hosts: target1
+- name: deploy database server
+  hosts: target1
 
-tasks:
-  - name: install MariaDB
-    # exec: sudo yum install -y mariadb-server
-    # edit config if required: sudo vi /etc/my.cnf
-    become: true
-    yum:
-      name: mariadb-server
-      state: latest
+  tasks:
+    - name: install MariaDB
+      # sudo yum install -y mariadb-server
+      # edit config if required: sudo vi /etc/my.cnf
+      become: true
+      yum:
+        name: mariadb-server
+        state: latest
 
-  - name: start mariadb service
-    # exec: sudo service mariadb start
-    # exec: sudo systemctl enable mariadb
-    become: true
-    service:
-      namee: mariadb
-      state: started
-      enabled: yes
+    - name: start mariadb service
+      # sudo service mariadb start
+      # sudo systemctl enable mariadb
+      become: true
+      service:
+        namee: mariadb
+        state: started
+        enabled: yes
 
-  - name: populate mariadb service facts
-    # exec: service mariadb status
-    ansible.builtin.service_facts:
+    - name: populate mariadb service facts
+      # service mariadb status
+      ansible.builtin.service_facts:
 
-  - name: configure firewall for database
-    # exec: sudo firewall-cmd --permanent --zone=public --add-port=3306/tcp
-    firewalld:
-      service: 
-      port: 3306/tcp
-      permanent: yes
-      state: enable
-      zone: public
-
-  - name: reload firewalld service
-    # exec: sudo firewall-cmd --list-all
-    # exec: sudo firewall-cmd --reload
-    # exec: sudo firewall-cmd --list-all
-    service:
-      name: firewalld
-      state: restarted
 

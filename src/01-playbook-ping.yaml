@@ -1,11 +1,6 @@
 ---
-- 
-  name: Deploy FirewallD
+- name: Ping Test
   hosts: target1
   tasks:
   - name: ping target
     ping: 
-
-
-
-
