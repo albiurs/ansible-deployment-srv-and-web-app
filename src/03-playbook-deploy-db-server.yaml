@@ -2,6 +2,11 @@
 - name: deploy database server
   hosts: target1
 
+  pre_tasks:
+    - name: installing python-3 mysql libraries
+      become: true
+      yum: name=MySQL-python.x86_64 state=present
+
   tasks:
     - name: install MariaDB
       # sudo yum install -y mariadb-server
@@ -16,7 +21,7 @@
       # sudo systemctl enable mariadb
       become: true
       ansible.builtin.service:
-        namee: mariadb
+        name: mariadb
         state: started
         enabled: yes
 

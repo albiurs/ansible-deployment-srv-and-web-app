@@ -49,6 +49,7 @@
         state: restarted
 
     - name: Clone a repo with separate git directory
+      become: true
       ansible.builtin.git:
         repo: https://github.com/kodekloudhub/learning-app-ecommerce.git
         dest: /var/www/html/
