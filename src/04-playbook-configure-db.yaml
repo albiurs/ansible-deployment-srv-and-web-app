@@ -7,6 +7,8 @@
       # MariaDB > CREATE DATABASE ecomdb;
       community.mysql.mysql_db:
         name: ecomdb
+        login_user: 'root'
+        login_password: ''
         state: present 
 
     - name: Create database user with name 'ecomuser' and password 'ecompassword' with all database privileges
@@ -14,22 +16,24 @@
       # MariaDB > GRANT ALL PRIVILEGES ON *.* TO 'ecomuser'@'localhost';
       # MariaDB > FLUSH PRIVILEGES;
       community.mysql.mysql_user:
+        login_user: 'root'
+        login_password: ''
         name: ecomuser
         password: ecompassword
         priv: '*.*:ALL'
         state: present
 
-    - name: Remove all anonymous user accounts on all hosts
-      community.mysql.mysql_user:
-        name: ''
-        host_all: yes
-        state: absent
+    #- name: Remove all anonymous user accounts on all hosts
+      #community.mysql.mysql_user:
+        #name: ''
+        #host_all: yes
+        #state: absent
 
     - name: restart mariadb service to reload privileges
       # sudo service mariadb restart
       become: true
       ansible.builtin.service:
-        namee: mariadb
+        name: mariadb
         state: restarted
 
     - name: copy db dump to remote server
