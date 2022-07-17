@@ -1,33 +1,33 @@
 ---
-- name: deploy FirewallD
+- name: Deploy FirewallD
   hosts: target1
 
   tasks:
-  - name: intall firewall service on target server
-    # exec: sudo yum install -y firewalld
+  - name: Intall firewall service on target server
+    # sudo yum install -y firewalld
     become: true
     ansible.builtin.yum:
       name: firewalld
       state: latest
 
-  - name: start firewall service  
-    # exec: sudo service firewalld start
-    # exec: sudo systemctl enable firewalld
+  - name: Start firewall service  
+    # sudo service firewalld start
+    # sudo systemctl enable firewalld
     become: true
     ansible.builtin.service:
       name: firewalld
       state: started  # start service
       enabled: yes    # enable service after reboot
 
-  - name: populate firewalld service facts
-    # exec: service firewalld status
+  - name: Populate firewalld service facts
+    # service firewalld status
     ansible.builtin.service_facts:
 
-- name: configure FirewallD rules for database
+- name: Configure FirewallD rules for database
   hosts: target1
 
   tasks:
-  - name: configure firewall rules for database
+  - name: Configure firewall rules for database
     # sudo firewall-cmd --permanent --zone=public --add-port=3306/tcp
     become: true
     ansible.posix.firewalld:
@@ -36,7 +36,7 @@
       state: enabled
       zone: public
 
-  - name: reload firewalld service
+  - name: Reload firewalld service
     # sudo firewall-cmd --list-all
     # sudo firewall-cmd --reload
     # sudo firewall-cmd --list-all
@@ -45,15 +45,15 @@
       name: firewalld
       state: restarted
 
-  - name: populate firewalld service facts
-    # exec: service firewalld status
+  - name: Populate firewalld service facts
+    # service firewalld status
     ansible.builtin.service_facts:
 
-- name: configure FirewallD rules for web server
+- name: Configure FirewallD rules for web server
   hosts: target1
 
   tasks:
-  - name: configure firewall rules for web server
+  - name: Configure firewall rules for web server
     # sudo firewall-cmd --list-all
     # sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
     become: true
@@ -63,7 +63,7 @@
       state: enabled
       zone: public
         
-  - name: reload firewalld service
+  - name: Reload firewalld service
     # sudo firewall-cmd --list-all
     # sudo firewall-cmd --reload
     # sudo firewall-cmd --list-all
@@ -72,6 +72,6 @@
       name: firewalld
       state: restarted
 
-  - name: populate firewalld service facts
-    # exec: service firewalld status
+  - name: Populate firewalld service facts
+    # service firewalld status
     ansible.builtin.service_facts:

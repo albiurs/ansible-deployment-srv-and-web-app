@@ -1,0 +1,24 @@
+---
+- name: Deploy website
+  hosts: target1
+
+  tasks:
+    - name: Clone a repo with separate git directory
+      become: true
+      ansible.builtin.git:
+        repo: https://github.com/kodekloudhub/learning-app-ecommerce.git
+        dest: /var/www/html/
+        clone: yes
+        update: yes
+
+    - name: Update index.php file to connect to the right database server
+      become: true
+      ansible.builtin.replace:
+        path: /var/www/html/index.php
+        regexp: '172.20.1.101'
+        replace: 'localhost'
+
+    - name: Check that we can connect (curl) to a page and it returns a status 200
+      ansible.builtin.uri:
+        url: http://localhost
+        
