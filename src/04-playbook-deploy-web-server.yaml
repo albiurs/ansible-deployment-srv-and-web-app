@@ -1,5 +1,5 @@
 ---
-- name: deploy web server
+- name: Deploy web server
   hosts: target1
   vars:
     packages:
@@ -13,7 +13,7 @@
         required: true
 
   tasks:
-    - name: install web server packages
+    - name: Install web server packages
       # sudo yum install -y httpd php php-mysql
       become: true
       ansible.builtin.yum:
@@ -22,7 +22,7 @@
       when: item.required == true
       loop: "{{ packages }}"
 
-    - name: start httpd service
+    - name: Start httpd service
       # sudo service httpd start
       # sudo systemctl enable httpd
       become: true
@@ -32,7 +32,7 @@
         state: started
         enabled: yes
 
-    - name: Configure httpd to use index.php
+    - name: configure httpd to use index.php
       # sudo sed -i 's/index.html/index.php/g' /etc/httpd/conf/httpd.conf
       become: true
       ansible.builtin.lineinfile:
@@ -41,29 +41,9 @@
         line: 'DirectoryIndex index.php'
         backrefs: yes
 
-    - name: restart service httpd
+    - name: Restart service httpd
       # sudo service httpd restart
       become: true
       ansible.builtin.service:
         name: httpd
         state: restarted
-
-    - name: Clone a repo with separate git directory
-      become: true
-      ansible.builtin.git:
-        repo: https://github.com/kodekloudhub/learning-app-ecommerce.git
-        dest: /var/www/html/
-        clone: yes
-        update: yes
-
-    - name: Update index.php file to connect to the right database server
-      become: true
-      ansible.builtin.replace:
-        path: /var/www/html/index.php
-        regexp: '172.20.1.101'
-        replace: 'localhost'
-
-    - name: Check that we can connect (curl) to a page and it returns a status 200
-      ansible.builtin.uri:
-        url: http://localhost
-        

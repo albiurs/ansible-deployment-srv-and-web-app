@@ -7,7 +7,8 @@
             "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/03-playbook-deploy-db-server.yaml",
             "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/02-playbook-deploy-firewalld.yaml",
             "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/ansible_demo_playbook.yaml",
-            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/05-playbook-deploy-web-server.yaml"
+            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/05-playbook-deploy-web-server.yaml",
+            "file:///home/alu/Documents/dev/ansible/ansible-deployment-srv-and-web-app/src/05_deploy-website.yaml"
         ]
     }
 }
